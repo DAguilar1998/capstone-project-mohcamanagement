@@ -2,6 +2,8 @@ import mysql.connector
 from User import *
 from Schedule import *
 
+
+
 def main():
 	overseer = mysql.connector.connect(
 		host="localhost",
@@ -21,9 +23,7 @@ def main():
 
 	userRows = cur.fetchall()
 	for userData in userRows:
-		if userData[2] == 0:
-			userList.append(User(userData, cur, date))
-		userData = cur.fetchone()
+		if userData[2] == 0: userList.append(User(userData, cur, date))
 
 	workSchedule = Schedule(userList)
 
