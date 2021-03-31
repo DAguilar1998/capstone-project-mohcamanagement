@@ -1,5 +1,6 @@
 import mysql.connector
 from User import *
+from Schedule import *
 
 def main():
 	overseer = mysql.connector.connect(
@@ -9,7 +10,7 @@ def main():
 		database="overseer")
 
 
-	cur = overseer.cursor()
+	cur = overseer.cursor(buffered=True)
 	
 	date = ScheduledDate(cur)
 
@@ -18,17 +19,13 @@ def main():
 
 	userList = list()
 
-	userData = cur.fetchone()
-	while userData != None:
+	userRows = cur.fetchall()
+	for userData in userRows:
 		if userData[2] == 0:
-			userList.append(User(userData, cur, date.getStartTimeDictionary(), date.getEndTimeDictionary()))
+			userList.append(User(userData, cur, date))
 		userData = cur.fetchone()
 
-
-
-	userList[0].calculateUserWeight()
-
-
+	workSchedule = Schedule(userList)
 
 	overseer.close()
 

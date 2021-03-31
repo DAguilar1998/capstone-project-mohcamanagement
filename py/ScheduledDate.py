@@ -24,3 +24,10 @@ class ScheduledDate:
 	def getEndTimeDictionary(self):
 		endTimeDict = {self.shifts[i] : self.endTime[i] for i in range(len(self.endTime))}
 		return endTimeDict
+
+	def shiftStringToIndex(self, shiftString):
+		shiftStringDict = {self.shifts[i] : i for i in range(len(self.endTime))}
+		return shiftStringDict.get(shiftString, "Error!")
+	
+	def getShiftAmount(self):
+		return len(self.shifts)

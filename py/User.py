@@ -1,15 +1,19 @@
 from ScheduledDate import *
 from datetime import datetime
+from Week import *
 
 class User:
-	def __init__(self, user, cursor, startDict, endDict):
+	def __init__(self, user, cursor, scheduleInfo):
 		self.userWeight = 0
 		self.totalHours = 0
-		self.hoursLeft = 0
-		self.startDict = startDict
-		self.endDict = endDict
+		self.hoursLeft = 20	
+		self.startDict = scheduleInfo.getStartTimeDictionary()
+		self.endDict = scheduleInfo.getEndTimeDictionary()
 		self.name = user[0]
 		self.pin = user[1]
+
+		self.week = Week(scheduleInfo)
+
 		self.userSchedule = {"Monday" : list(), 
 							"Tuesday" : list(), 
 							"Wednesday" : list(),
@@ -27,13 +31,21 @@ class User:
 			if data[i][1] == None: self.userSchedule.get(data[i][0]).append("None")
 			else: self.userSchedule.get(data[i][0]).append(data[i][1])
 
-		print(self.userSchedule)
+		self.calculateUserWeight()
 
 	def setUserWeight(self, weight):
 		self.userWeight = weight
 
 	def userScheduleAdd(self, element):
 		self.userSchedule.append(element)
+
+
+	def calculateDaysWorking(self):
+		daysAmount = 0
+		for i in list(self.userSchedule.values()):
+			if len(i) > 0: daysAmount += 1
+		return daysAmount
+
 
 	def calculateTotalHoursRequested(self):
 		for i in range(len(self.userSchedule)):
@@ -59,8 +71,16 @@ class User:
 
 				# (totalHours)
 				#print(endTime)
+		print("Total hours: " + str(self.totalHours))
 
 	def calculateUserWeight(self):
 		self.calculateTotalHoursRequested()
 		self.setUserWeight(self.totalHours - self.hoursLeft)
+		print("Amount of days working: " + str(self.calculateDaysWorking()))
 		print(self.userWeight)
+
+	def getUserWeight(self):
+		return self.userWeight
+
+	def getName(self):
+		return self.name
