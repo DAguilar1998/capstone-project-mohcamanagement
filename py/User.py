@@ -19,7 +19,7 @@ class User:
 							"Sunday" : list()}
 
 
-		cursor.execute('SELECT Day, ShiftName FROM availability WHERE Pin=?', (self.pin,))
+		cursor.execute('SELECT Day, ShiftName FROM availability WHERE Pin = %s', (self.pin,))
 
 		data = cursor.fetchall()
 
