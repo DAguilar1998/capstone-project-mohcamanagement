@@ -26,7 +26,7 @@ def main():
 
 
 
-	userList[0].calculateTotalHoursRequested()
+	userList[0].calculateUserWeight()
 
 
 
