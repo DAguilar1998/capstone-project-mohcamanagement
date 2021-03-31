@@ -24,11 +24,20 @@ def main():
 		if userData[2] == 0:
 			userList.append(User(userData, cur, date))
 		userData = cur.fetchone()
-
+	userList.sort(compareByWeight)
 	workSchedule = Schedule(userList)
 
 	overseer.close()
 
+    
+    
+def compareByWeight(a, b):
+    if (a.getUserWeight < b.getUserWeight):
+        return -1
+    if (a.getUserWeight > b.getUserWeight):
+        return 1
+    return 0
+    
 
 if __name__ == "__main__":
 	main()
