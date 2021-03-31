@@ -1,9 +1,15 @@
-import sqlite3
+import mysql.connector
 from User import *
 
 def main():
-	con = sqlite3.connect('overseer.db')
-	cur = con.cursor()
+	overseer = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		password="",
+		database="overseer")
+
+
+	cur = overseer.cursor()
 	
 	date = ScheduledDate(cur)
 
@@ -24,7 +30,7 @@ def main():
 
 
 
-	con.close()
+	overseer.close()
 
 
 if __name__ == "__main__":
