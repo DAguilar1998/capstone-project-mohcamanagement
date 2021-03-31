@@ -30,7 +30,9 @@ def main():
 	overseer.close()
 
     
-    
+def sortUserArray(userArray):
+	userArray.sort(compareByWeight)
+	
 def compareByWeight(a, b):
     if (a.getUserWeight < b.getUserWeight):
         return -1
