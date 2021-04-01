@@ -5,7 +5,4 @@ class Week:
         
     def getDay(self, day):
         return self.currentWeek[day]
-    
-        
-        
-    
+          

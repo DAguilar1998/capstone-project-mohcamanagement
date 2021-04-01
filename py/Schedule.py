@@ -1,6 +1,18 @@
+from Week import *
 class Schedule:
-    def __init__(self, users):
+    def __init__(self, users, scheduleInfo):
         self.users = users
+        self.finalizedWeek = Week(scheduleInfo)
+
+    def sortUserArray(self, userArray):
+        userArray.sort(key=cmp_to_key(compareByWeight), reverse=True)
+	
+    def compareByWeight(self, a, b):
+        if (a.getUserWeight() < b.getUserWeight()):
+            return -1
+        if (a.getUserWeight() > b.getUserWeight()):
+            return 1
+        return 0
 
     #Prints the schedule
     def printSchedule(self):
@@ -17,9 +29,11 @@ class Schedule:
     #Judges a user's request to work that day
     def judgeUserRequest(self, user):
         daysAvailable = user.calculateDaysWorking()
+        
+        if daysAvailable != 0:
+            userAvailability = user.getUserAvailability()
 
-        if daysAvailable <= 2:
-            print("todo")
+
 
     #Determine if all users have a shift or if all days are set
     def stillAvailable(self):

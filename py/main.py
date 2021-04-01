@@ -1,6 +1,7 @@
 import mysql.connector
 from User import *
 from Schedule import *
+from functools import cmp_to_key
 
 
 
@@ -25,25 +26,28 @@ def main():
 	for userData in userRows:
 
 		if userData[2] == 0:
-			userList.append(User(userData, cur, date))
-		userData = cur.fetchone()
-	userList.sort(compareByWeight)
+			currentUser = User(userData, cur, date)
+			if currentUser.calculateDaysWorking() != 0:
+				userList.append(currentUser)
 
-		if userData[2] == 0: userList.append(User(userData, cur, date))
+	userList.sort(key=cmp_to_key(compareByWeight), reverse=True)
+
+	for i in userList:
+		print(i.getName() + ": " + str(i.getUserWeight()))
 
 
-	workSchedule = Schedule(userList)
+	workSchedule = Schedule(userList, date)
 
 	overseer.close()
 
     
 def sortUserArray(userArray):
-	userArray.sort(compareByWeight)
+	userArray.sort(key=cmp_to_key(compareByWeight), reverse=True)
 	
 def compareByWeight(a, b):
-    if (a.getUserWeight < b.getUserWeight):
+    if (a.getUserWeight() < b.getUserWeight()):
         return -1
-    if (a.getUserWeight > b.getUserWeight):
+    if (a.getUserWeight() > b.getUserWeight()):
         return 1
     return 0
     
