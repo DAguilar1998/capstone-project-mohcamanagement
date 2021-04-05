@@ -3,7 +3,7 @@ from User import *
 from Schedule import *
 from functools import cmp_to_key
 
-
+#Programmed by Marvin Zavala, Dimitri Aguilar, and Joshua Kuiper
 
 def main():
 	overseer = mysql.connector.connect(
