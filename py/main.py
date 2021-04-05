@@ -32,11 +32,9 @@ def main():
 
 	userList.sort(key=cmp_to_key(compareByWeight), reverse=True)
 
-	for i in userList:
-		print(i.getName() + ": " + str(i.getUserWeight()))
-
-
 	workSchedule = Schedule(userList, date)
+	workSchedule.createSchedule()
+	workSchedule.printSchedule()
 
 	overseer.close()
 
